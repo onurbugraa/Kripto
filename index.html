@@ -64,39 +64,45 @@
             gap: 20px;
         }
 
-        /* ÜST SIRA */
+        /* --- YENİ DÜZEN --- */
+        
+        /* 1. SATIR: Fiyat + Korku + RSI */
         .card-price     { grid-column: span 6; }
         .card-fear      { grid-column: span 3; }
-        .card-liq-stat  { grid-column: span 3; }
+        .card-rsi       { grid-column: span 3; } /* RSI buraya alındı */
 
-        /* ORTA SIRA */
+        /* 2. SATIR: Fed + MACD + Sinyal */
         .card-fed       { grid-column: span 4; }
         .card-macd      { grid-column: span 4; } 
-        .card-rsi       { grid-column: span 4; }
+        .card-signal    { grid-column: span 4; } /* Sinyal buraya alındı */
         
-        /* ALT SIRA 1 */
-        .card-bot       { grid-column: span 6; } 
-        .card-signal    { grid-column: span 6; }
+        /* 3. SATIR: Bot + Telegram */
+        .card-bot       { grid-column: span 8; } 
+        .card-telegram  { grid-column: span 4; } 
 
-        /* ALT SIRA 2 */
-        .card-liq-details { grid-column: span 8; }
-        .card-telegram    { grid-column: span 4; }
+        /* 4. SATIR: Likidasyon Detayları */
+        .card-liq-details { grid-column: span 12; }
 
-        /* ALT SIRA 3 */
+        /* 5. SATIR: Takvim + Haberler */
         .card-calendar    { grid-column: span 8; } 
         .card-news        { grid-column: span 4; } 
 
         /* Responsive */
         @media (max-width: 1200px) {
             .card-price { grid-column: span 12; }
-            .card-fear, .card-liq-stat, .card-fed, .card-macd, .card-rsi { grid-column: span 6; }
-            .card-bot, .card-signal { grid-column: span 12; }
-            .card-liq-details { grid-column: span 12; }
+            .card-fear, .card-rsi { grid-column: span 6; }
+            .card-fed, .card-macd, .card-signal { grid-column: span 4; }
+            .card-bot { grid-column: span 12; }
             .card-telegram { grid-column: span 12; }
-            .card-calendar, .card-news { grid-column: span 12; }
+            .card-liq-details { grid-column: span 12; }
+            .card-calendar { grid-column: span 12; }
+            .card-news { grid-column: span 12; }
+        }
+        @media (max-width: 900px) {
+            .card-fed, .card-macd, .card-signal { grid-column: span 12; }
         }
         @media (max-width: 700px) {
-            .card-fear, .card-liq-stat, .card-fed, .card-macd, .card-rsi { grid-column: span 12; }
+            .card-fear, .card-rsi { grid-column: span 12; }
         }
 
         /* Cards */
@@ -120,31 +126,23 @@
         .text-red { color: var(--down-color); }
         .text-neutral { color: var(--rsi-neutral); }
 
-        /* --- FİYAT KARTI ÖZEL (GELİŞMİŞ GRAFİK) --- */
-        .price-chart-wrapper {
-            display: flex;
-            height: 100%;
-            gap: 20px;
-        }
-        .price-info {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            min-width: 150px;
-        }
-        .price-chart {
-            flex: 1;
-            border-radius: 8px;
-            overflow: hidden;
-            min-height: 250px; /* Grafik yüksekliği artırıldı */
-            border: 1px solid #2b3139;
+        /* --- FİYAT KARTI ÖZEL --- */
+        .price-chart-wrapper { display: flex; height: 100%; gap: 20px; }
+        .price-info { display: flex; flex-direction: column; justify-content: center; min-width: 150px; }
+        .price-chart { flex: 1; border-radius: 8px; overflow: hidden; min-height: 300px; border: 1px solid #2b3139; }
+
+        @media (max-width: 768px) {
+            .price-chart-wrapper { flex-direction: column; gap: 10px; }
+            .price-info { flex-direction: row; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 10px; }
+            .big-value { font-size: 1.8rem; margin-bottom: 0; }
+            .sub-value { font-size: 1rem; }
+            .price-chart { min-height: 350px; }
         }
 
         /* --- FED MONİTÖRÜ ÖZEL --- */
         .fed-prob-bar { display: flex; height: 8px; background: #2b3139; border-radius: 4px; overflow: hidden; margin-top: 10px; }
         .prob-segment { height: 100%; transition: width 0.5s; }
-        .prob-cut { background: var(--up-color); }
-        .prob-hold { background: var(--text-secondary); }
+        .prob-cut { background: var(--up-color); } .prob-hold { background: var(--text-secondary); }
         .fed-labels { display: flex; justify-content: space-between; font-size: 0.75rem; margin-top: 8px; color: var(--text-secondary); }
         .fed-val { color: #fff; font-weight: bold; }
         .fed-scenario { margin-bottom: 12px; }
@@ -163,7 +161,7 @@
         .rsi-gauge-container { position: relative; height: 8px; background: linear-gradient(90deg, var(--up-color) 0%, var(--rsi-neutral) 50%, var(--down-color) 100%); border-radius: 4px; margin-top: 10px; margin-bottom: 8px; }
         .rsi-marker { position: absolute; top: -4px; width: 4px; height: 16px; background: #fff; border: 1px solid #000; transform: translateX(-50%); transition: left 0.5s ease; }
         .rsi-zones { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 10px; }
-        .rsi-comment-box { background: rgba(255, 255, 255, 0.05); border-left: 3px solid var(--text-secondary); padding: 8px; font-size: 0.8rem; border-radius: 0 4px 4px 0; line-height: 1.4; }
+        .rsi-comment-box { background: rgba(255, 255, 255, 0.05); border-left: 3px solid var(--text-secondary); padding: 8px; font-size: 0.7rem; border-radius: 0 4px 4px 0; line-height: 1.4; }
         .rsi-dual-container { display: flex; gap: 15px; margin-bottom: 10px; }
         .rsi-mini-box { flex: 1; background: #0b0e14; border: 1px solid #2b3139; border-radius: 6px; padding: 10px; text-align: center; display: flex; flex-direction: column; justify-content: center; }
         .rsi-label-sm { font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 4px; font-weight: 700; }
@@ -271,6 +269,8 @@
             .timeframe-row, .macd-dual-container { flex-direction: column; gap: 10px; } 
             .macd-col { border-right: none; border-bottom: 1px solid #2b3139; padding-bottom: 10px; padding-right: 0; padding-left: 0; } 
             .macd-col:last-child { border-bottom: none; padding-top: 10px; padding-left: 0; }
+            .rsi-dual-container { flex-direction: column; }
+            .rsi-mini-box { flex-direction: row; justify-content: space-between; }
         }
     </style>
 </head>
@@ -285,7 +285,7 @@
 
     <div class="grid-container">
         
-        <!-- 1. BTC Fiyatı ve Grafik (Span 6 - Geniş) -->
+        <!-- 1. BTC Fiyatı ve Grafik -->
         <div class="card card-price">
             <div class="card-header">
                 <span>Bitcoin (BTC)</span>
@@ -299,7 +299,6 @@
                         Anlık Volatilite: Yüksek
                     </div>
                 </div>
-                <!-- Gelişmiş Canlı Grafik -->
                 <div class="price-chart">
                     <div class="tradingview-widget-container">
                       <div class="tradingview-widget-container__widget"></div>
@@ -314,6 +313,7 @@
                       "style": "1",
                       "locale": "tr",
                       "enable_publishing": false,
+                      "hide_side_toolbar": true,
                       "allow_symbol_change": true,
                       "calendar": false,
                       "support_host": "https://www.tradingview.com"
@@ -336,18 +336,36 @@
             </div>
         </div>
 
-        <!-- 3. LİKİDASYON ÖZETİ -->
-        <div class="card card-liq-stat">
+        <!-- 3. RSI ANALİZİ (YER DEĞİŞTİRDİ - ÜSTTE) -->
+        <div class="card card-rsi">
             <div class="card-header">
-                <span>Rekt Özeti (24s)</span>
-                <span style="color:var(--down-color)">Tahmini</span>
+                <span>RSI Analizi (1D / 1W)</span>
+                <span class="status-badge" style="background:#2b3139; color:#fff; padding:2px 8px;">Bybit BTC/USDT</span>
             </div>
-            <div class="big-value text-red" id="global-liq-total-small" style="font-family: 'Courier New', monospace;">$0</div>
-            <div class="sub-value">
-                <span style="color:var(--text-secondary)">Global Piyasalar</span>
+            
+            <div class="rsi-dual-container">
+                <!-- Günlük -->
+                <div class="rsi-mini-box">
+                    <div class="rsi-info-col">
+                        <span class="rsi-label-sm">GÜNLÜK (KISA)</span>
+                        <div class="rsi-val-sm" id="rsi-val-1d">--</div>
+                    </div>
+                    <div class="rsi-status-sm" id="rsi-stat-1d">--</div>
+                </div>
+
+                <!-- Haftalık -->
+                <div class="rsi-mini-box">
+                    <div class="rsi-info-col">
+                        <span class="rsi-label-sm">HAFTALIK (UZUN)</span>
+                        <div class="rsi-val-sm" id="rsi-val-1w">--</div>
+                    </div>
+                    <div class="rsi-status-sm" id="rsi-stat-1w">--</div>
+                </div>
             </div>
-             <div class="meter-bg" style="margin-top: auto;">
-                <div class="meter-fill" style="width: 90%; background: var(--down-color); opacity:0.8"></div>
+
+            <!-- Sentez Yorum -->
+            <div class="rsi-comment-box" id="rsi-comment-dual">
+                Analiz ediliyor...
             </div>
         </div>
 
@@ -421,33 +439,23 @@
             </div>
         </div>
 
-        <!-- 6. RSI (GÜNLÜK & HAFTALIK) -->
-        <div class="card card-rsi">
-            <div class="card-header">
-                <span>RSI Analizi (1D / 1W)</span>
-                <span class="status-badge" style="background:#2b3139; color:#fff; padding:2px 8px;">Bybit BTC/USDT</span>
-            </div>
-            
-            <div class="rsi-dual-container">
-                <div class="rsi-mini-box">
-                    <span class="rsi-label-sm">GÜNLÜK (KISA VADE)</span>
-                    <div class="rsi-val-sm" id="rsi-val-1d">--</div>
-                    <div class="rsi-status-sm" id="rsi-stat-1d">--</div>
-                    <div class="rsi-gauge-mini">
-                        <div class="rsi-marker-mini" id="rsi-marker-1d" style="left:50%"></div>
-                    </div>
-                </div>
-                <div class="rsi-mini-box">
-                    <span class="rsi-label-sm">HAFTALIK (UZUN VADE)</span>
-                    <div class="rsi-val-sm" id="rsi-val-1w">--</div>
-                    <div class="rsi-status-sm" id="rsi-stat-1w">--</div>
-                    <div class="rsi-gauge-mini">
-                        <div class="rsi-marker-mini" id="rsi-marker-1w" style="left:50%"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="rsi-comment-box" id="rsi-comment-dual">
-                Analiz ediliyor...
+        <!-- 6. SİNYAL KUTUSU (YENİ YERLEŞİM - ORTADA) -->
+        <div class="card card-signal" style="padding:0;">
+             <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                {
+                "interval": "15m",
+                "width": "100%",
+                "height": "100%",
+                "isTransparent": true,
+                "symbol": "BINANCE:BTCUSDT",
+                "showIntervalTabs": false,
+                "displayMode": "single",
+                "locale": "tr",
+                "colorTheme": "dark"
+                }
+                </script>
             </div>
         </div>
 
@@ -510,7 +518,18 @@
             </div>
         </div>
 
-        <!-- 8. LİKİDASYON DETAY PANELİ -->
+        <!-- 8. TELEGRAM KUTUSU (BOTUN YANINDA - UFAK) -->
+        <div class="card card-telegram" style="padding:0;">
+            <div class="card-header" style="padding: 15px 15px 5px 15px;">
+                <span>💬 Binance Liquidations</span>
+                <a href="https://t.me/BinanceLiquidations" target="_blank" class="status-badge" style="text-decoration:none; cursor:pointer;">Telegram</a>
+            </div>
+            <div class="tg-feed-container" id="tg-feed">
+                <div class="tg-msg" style="text-align:center; color:#666;">Veriler yükleniyor...</div>
+            </div>
+        </div>
+
+        <!-- 9. LİKİDASYON DETAY PANELİ -->
         <div class="card card-liq-details">
             <div class="card-header">
                 <span>🚨 Detaylı Likidasyon Verileri</span>
@@ -547,17 +566,6 @@
             <div class="ls-bar-wrapper">
                 <div class="ls-bar-long" id="bar-long">%80</div>
                 <div class="ls-bar-short" id="bar-short">%20</div>
-            </div>
-        </div>
-
-        <!-- 9. TELEGRAM KUTUSU -->
-        <div class="card card-telegram" style="padding:0;">
-            <div class="card-header" style="padding: 15px 15px 5px 15px;">
-                <span>💬 Binance Liquidations</span>
-                <a href="https://t.me/BinanceLiquidations" target="_blank" class="status-badge" style="text-decoration:none; cursor:pointer;">Telegram</a>
-            </div>
-            <div class="tg-feed-container" id="tg-feed">
-                <div class="tg-msg" style="text-align:center; color:#666;">Veriler yükleniyor...</div>
             </div>
         </div>
 
@@ -669,8 +677,8 @@
         // --- 3. UI UPDATE ---
         function updateGlobalTotals() {
             const total24h = longLiqTotal + shortLiqTotal;
-            const elGlobal = document.getElementById('global-liq-total-small');
-            if(elGlobal) elGlobal.innerText = formatMoney(total24h);
+            // const elGlobal = document.getElementById('global-liq-total-small');
+            // if(elGlobal) elGlobal.innerText = formatMoney(total24h);
             
             const el24h = document.getElementById('detail-24h-val');
             if(el24h) el24h.innerText = formatMoney(total24h, true);
