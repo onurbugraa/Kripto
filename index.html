@@ -64,28 +64,26 @@
             gap: 20px;
         }
 
-        /* ÜST SIRA (4 Kutu) */
+        /* ÜST SIRA */
         .card-price     { grid-column: span 3; }
         .card-fear      { grid-column: span 3; }
         .card-liq-stat  { grid-column: span 3; }
         .card-fed       { grid-column: span 3; }
 
-        /* ORTA SIRA (3 Kutu) */
+        /* ORTA SIRA */
         .card-macd      { grid-column: span 4; } 
         .card-rsi       { grid-column: span 4; }
-        .card-signal    { grid-column: span 4; }
+        .card-bot       { grid-column: span 4; } /* BOT KUTUSU */
 
-        /* ALT SIRA 1 */
+        /* ALT SIRA */
         .card-liq-details { grid-column: span 8; }
         .card-telegram    { grid-column: span 4; }
-
-        /* ALT SIRA 2 */
         .card-calendar    { grid-column: span 12; }
 
         /* Responsive */
         @media (max-width: 1200px) {
             .card-price, .card-fear, .card-liq-stat, .card-fed { grid-column: span 6; }
-            .card-macd, .card-rsi, .card-signal { grid-column: span 12; } 
+            .card-macd, .card-rsi, .card-bot { grid-column: span 12; } 
             .card-liq-details { grid-column: span 12; }
             .card-telegram { grid-column: span 12; }
             .card-calendar { grid-column: span 12; }
@@ -107,7 +105,7 @@
             min-height: 160px;
         }
 
-        .card-header { color: var(--text-secondary); font-size: 0.85rem; font-weight: 600; margin-bottom: 12px; display: flex; justify-content: space-between; text-transform: uppercase; letter-spacing: 0.5px; }
+        .card-header { color: var(--text-secondary); font-size: 0.85rem; font-weight: 600; margin-bottom: 12px; display: flex; justify-content: space-between; text-transform: uppercase; letter-spacing: 0.5px; align-items: center; }
         .big-value { font-size: 2rem; font-weight: 700; margin-bottom: 5px; transition: color 0.3s; }
         .sub-value { font-size: 0.85rem; display: flex; align-items: center; gap: 5px; font-weight: 500; color: var(--text-secondary); }
 
@@ -118,20 +116,117 @@
         .meter-bg { height: 6px; background: #2b3139; border-radius: 3px; overflow: hidden; margin-top: auto; }
         .meter-fill { height: 100%; border-radius: 3px; transition: width 0.5s; }
 
-        /* --- EKONOMİK TAKVİM ÖZEL --- */
-        .calendar-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-        .calendar-table th { text-align: left; color: var(--text-secondary); padding-bottom: 10px; border-bottom: 1px solid #2b3139; font-weight: 600; }
-        .calendar-table td { padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #e5e7eb; }
-        .cal-time { width: 15%; color: var(--accent); font-weight: bold; font-size: 0.8rem; }
-        .cal-impact { width: 12%; }
-        .cal-event { width: 50%; font-weight: 600; }
-        .cal-forecast { width: 15%; color: var(--text-secondary); text-align: right; }
-        .cal-impact-high { color: #fcd535; letter-spacing: 1px; font-size: 0.7rem; } 
-        .cal-impact-medium { color: #fb923c; letter-spacing: 1px; font-size: 0.7rem; } 
-        .cal-row:hover { background: rgba(255,255,255,0.02); }
-        .cal-analysis { font-size: 0.7rem; color: var(--text-secondary); font-style: italic; margin-left: 0; display: block; margin-top: 2px; font-weight: normal; opacity: 0.8; }
+        /* --- BOT KUTUSU ÖZEL (HEDEFLİ) --- */
+        .bot-price-display {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            text-align: center;
+            margin: 5px 0 10px 0;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 10px rgba(255,255,255,0.1);
+        }
+        
+        /* Hedef Fiyat Kutuları */
+        .bot-targets {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .target-box {
+            flex: 1;
+            background: rgba(0,0,0,0.3);
+            padding: 8px 5px;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid #2b3139;
+        }
+        .target-label {
+            font-size: 0.6rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+        .target-price {
+            font-weight: 800;
+            font-size: 0.8rem;
+            font-family: 'Courier New', monospace;
+        }
 
-        /* --- TELEGRAM KUTUSU --- */
+        .bot-indicators-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .ind-box {
+            background: rgba(0,0,0,0.3);
+            padding: 6px 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            border: 1px solid #2b3139;
+        }
+        .ind-name { color: var(--text-secondary); font-weight: 600; }
+        .ind-status { font-weight: bold; }
+        
+        .bot-decision-bar {
+            height: 6px;
+            background: #2b3139;
+            border-radius: 3px;
+            position: relative;
+            margin: 10px 0;
+        }
+        .decision-marker {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border-radius: 50%;
+            top: -2px;
+            left: 50%;
+            transition: left 0.5s ease;
+            box-shadow: 0 0 5px #fff;
+        }
+        
+        .bot-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #2b3139;
+        }
+        .switch { position: relative; display: inline-block; width: 36px; height: 18px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #4b5563; transition: .4s; border-radius: 20px; }
+        .slider:before { position: absolute; content: ""; height: 12px; width: 12px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--up-color); }
+        input:checked + .slider:before { transform: translateX(18px); }
+        .bot-status-text { font-size: 0.8rem; font-weight: bold; color: var(--text-secondary); }
+        .bot-active { color: var(--up-color); animation: pulse 2s infinite; }
+
+        .bot-log-container {
+            max-height: 80px;
+            overflow-y: auto;
+            font-size: 0.7rem;
+            margin-top: 10px;
+            background: #0b0e14;
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #2b3139;
+        }
+        .log-entry { margin-bottom: 2px; font-family: monospace; }
+        .log-buy { color: var(--up-color); }
+        .log-sell { color: var(--fed-blue); }
+        .log-stop { color: var(--down-color); }
+        .log-info { color: var(--text-secondary); }
+
+        /* --- DİĞER BİLEŞENLER --- */
         .tg-feed-container { flex: 1; overflow-y: auto; padding-right: 5px; max-height: 450px; display: flex; flex-direction: column; gap: 12px; }
         .tg-feed-container::-webkit-scrollbar { width: 4px; }
         .tg-feed-container::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
@@ -142,13 +237,10 @@
         .tg-row { display: flex; justify-content: space-between; margin-bottom: 3px; font-size: 0.8rem; }
         .tg-time { font-size: 0.7rem; color: var(--text-secondary); margin-top: 6px; text-align: right; font-style: italic; }
 
-        /* --- RSI --- */
         .rsi-gauge-container { position: relative; height: 8px; background: linear-gradient(90deg, var(--up-color) 0%, var(--rsi-neutral) 50%, var(--down-color) 100%); border-radius: 4px; margin-top: 10px; margin-bottom: 8px; }
         .rsi-marker { position: absolute; top: -4px; width: 4px; height: 16px; background: #fff; border: 1px solid #000; transform: translateX(-50%); transition: left 0.5s ease; }
         .rsi-zones { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 10px; }
         .rsi-comment-box { background: rgba(255, 255, 255, 0.05); border-left: 3px solid var(--text-secondary); padding: 8px; font-size: 0.8rem; border-radius: 0 4px 4px 0; line-height: 1.4; }
-
-        /* --- FED --- */
         .fed-scenario { margin-bottom: 12px; }
         .fed-sc-label { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px; font-weight: 600; }
         .fed-sc-bar-bg { height: 8px; background: #2b3139; border-radius: 4px; overflow: hidden; }
@@ -157,8 +249,6 @@
         .hist-title { font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; }
         .hist-row { display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 4px; }
         .hist-val { font-weight: bold; color: #eaecef; }
-
-        /* --- LIQ DETAILS --- */
         .timeframe-row { display: flex; gap: 15px; margin-bottom: 20px; border-bottom: 1px solid #2b3139; padding-bottom: 20px; }
         .tf-box { flex: 1; background: #0b0e14; border: 1px solid #2b3139; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .tf-label { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px; text-align: center; }
@@ -171,8 +261,11 @@
         .ls-bar-wrapper { position: relative; height: 24px; background: #2b3139; border-radius: 6px; overflow: hidden; margin: 0 10px 20px 10px; display: flex; }
         .ls-bar-long { height: 100%; background: var(--liq-long); width: 50%; transition: width 0.5s ease; display: flex; align-items: center; justify-content: flex-start; padding-left: 10px; color: #000; font-weight: bold; font-size: 0.75rem; }
         .ls-bar-short { height: 100%; background: var(--liq-short); width: 50%; transition: width 0.5s ease; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: #fff; font-weight: bold; font-size: 0.75rem; }
-        
-        /* --- MACD --- */
+        .liq-stream-container { background: #0b0e14; border: 1px solid #2b3139; border-radius: 8px; height: 250px; overflow-y: hidden; position: relative; }
+        .liq-stream-list { padding: 10px; display: flex; flex-direction: column; gap: 6px; }
+        .liq-item { display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; padding: 8px 15px; background: #161a25; border-radius: 6px; animation: slideIn 0.3s ease-out; border-left: 4px solid transparent; }
+        .liq-long { border-left-color: var(--liq-long); } .liq-short { border-left-color: var(--liq-short); }
+        .coin-badge { background: #2b3139; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; margin-right: 10px; font-weight: bold; }
         .macd-dual-container { display: flex; gap: 20px; height: 100%; }
         .macd-col { flex: 1; display: flex; flex-direction: column; border-right: 1px solid #2b3139; padding-right: 10px; }
         .macd-col:last-child { border-right: none; padding-right: 0; padding-left: 10px; }
@@ -181,8 +274,18 @@
         .macd-mini-stats { font-size: 0.75rem; color: var(--text-secondary); display: flex; justify-content: space-between; margin-bottom: 10px; }
         .macd-hist-mini { display: flex; align-items: flex-end; height: 40px; gap: 3px; opacity: 0.8; margin-top: auto; }
         .hist-bar { flex: 1; background: #2b3139; border-radius: 2px; transition: height 0.3s, background 0.3s; }
-
         .tradingview-widget-container { height: 100%; width: 100%; min-height: 120px; }
+        .calendar-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        .calendar-table th { text-align: left; color: var(--text-secondary); padding-bottom: 10px; border-bottom: 1px solid #2b3139; font-weight: 600; }
+        .calendar-table td { padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #e5e7eb; }
+        .cal-time { width: 15%; color: var(--accent); font-weight: bold; font-size: 0.8rem; }
+        .cal-impact { width: 12%; }
+        .cal-event { width: 50%; font-weight: 600; }
+        .cal-forecast { width: 15%; color: var(--text-secondary); text-align: right; }
+        .cal-impact-high { color: #fcd535; letter-spacing: 1px; font-size: 0.7rem; } 
+        .cal-impact-medium { color: #fb923c; letter-spacing: 1px; font-size: 0.7rem; } 
+        .cal-row:hover { background: rgba(255,255,255,0.02); }
+        .cal-analysis { font-size: 0.7rem; color: var(--text-secondary); font-style: italic; margin-left: 0; display: block; margin-top: 2px; font-weight: normal; opacity: 0.8; }
 
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
         @keyframes slideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
@@ -233,12 +336,12 @@
         <!-- 3. LİKİDASYON ÖZETİ -->
         <div class="card card-liq-stat">
             <div class="card-header">
-                <span>Rekt Özeti</span>
-                <span style="color:var(--down-color)">Global</span>
+                <span>Rekt Özeti (24s)</span>
+                <span style="color:var(--down-color)">Tahmini</span>
             </div>
-            <div class="big-value text-red" id="global-liq-total-small">$0</div>
+            <div class="big-value text-red" id="global-liq-total-small" style="font-family: 'Courier New', monospace;">$0</div>
             <div class="sub-value">
-                <span style="color:var(--text-secondary)">Son 24 Saat Toplamı</span>
+                <span style="color:var(--text-secondary)">Global Piyasalar</span>
             </div>
              <div class="meter-bg" style="margin-top: auto;">
                 <div class="meter-fill" style="width: 90%; background: var(--down-color); opacity:0.8"></div>
@@ -285,11 +388,11 @@
             </div>
         </div>
 
-        <!-- 5. MACD GÖSTERGESİ (BYBIT KAYNAKLI) -->
+        <!-- 5. MACD GÖSTERGESİ -->
         <div class="card card-macd">
             <div class="card-header">
                 <span>MACD Trend (4H / 1D)</span>
-                <span class="status-badge" style="background:#2b3139; color:#fff; padding:2px 8px;">Kaynak: Bybit</span>
+                <span class="status-badge" style="background:#2b3139; color:#fff; padding:2px 8px;">EMA (12, 26, 9)</span>
             </div>
             
             <div class="macd-dual-container">
@@ -334,23 +437,72 @@
             <div class="rsi-comment-box" id="rsi-comment">RSI verisi çekiliyor...</div>
         </div>
 
-        <!-- 7. TradingView Widget -->
-        <div class="card card-signal" style="padding:0;">
-            <div class="tradingview-widget-container">
-                <div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
-                {
-                "interval": "1m",
-                "width": "100%",
-                "isTransparent": true,
-                "height": "100%",
-                "symbol": "BINANCE:BTCUSDT",
-                "showIntervalTabs": false,
-                "displayMode": "single",
-                "locale": "tr",
-                "colorTheme": "dark"
-                }
-                </script>
+        <!-- 7. [YENİ] PRO BOT KUTUSU -->
+        <div class="card card-bot">
+            <div class="card-header">
+                <span>⚡ Pro AI Trader (Multi-Indicator)</span>
+                <span class="status-badge" style="background:var(--accent); color:#000;">Sanal (Paper)</span>
+            </div>
+            
+            <!-- CANLI FİYAT GÖSTERGESİ -->
+            <div class="bot-price-display" id="bot-live-price">--</div>
+
+            <!-- HEDEFLER (YENİ EKLENEN KISIM) -->
+            <div class="bot-targets">
+                <div class="target-box" style="border-color: var(--up-color);">
+                    <span class="target-label text-green">GÜVENLİ ALIM (DİP)</span>
+                    <div class="target-price text-green" id="target-buy">--</div>
+                </div>
+                <div class="target-box" style="border-color: var(--fed-blue);">
+                    <span class="target-label" style="color:var(--fed-blue)">HEDEF SATIŞ (TP)</span>
+                    <div class="target-price" style="color:var(--fed-blue)" id="target-sell">--</div>
+                </div>
+                <div class="target-box" style="border-color: var(--down-color);">
+                    <span class="target-label text-red">STOP LOSS</span>
+                    <div class="target-price text-red" id="target-stop">--</div>
+                </div>
+            </div>
+
+            <!-- İNDİKATÖR MATRİSİ -->
+            <div class="bot-indicators-grid">
+                <div class="ind-box" id="ind-box-rsi">
+                    <span class="ind-name">RSI</span>
+                    <span class="ind-status" id="ind-val-rsi">--</span>
+                </div>
+                <div class="ind-box" id="ind-box-macd">
+                    <span class="ind-name">MACD</span>
+                    <span class="ind-status" id="ind-val-macd">--</span>
+                </div>
+                <div class="ind-box" id="ind-box-bb">
+                    <span class="ind-name">BOLL</span>
+                    <span class="ind-status" id="ind-val-bb">--</span>
+                </div>
+                <div class="ind-box" id="ind-box-ema">
+                    <span class="ind-name">EMA</span>
+                    <span class="ind-status" id="ind-val-ema">--</span>
+                </div>
+            </div>
+
+            <!-- SİNYAL GÜCÜ BAR -->
+            <div style="font-size:0.7rem; color:var(--text-secondary); display:flex; justify-content:space-between; margin-bottom:2px;">
+                <span>Güçlü Satış</span>
+                <span>Nötr</span>
+                <span>Güçlü Alış</span>
+            </div>
+            <div class="bot-decision-bar">
+                <div class="decision-marker" id="decision-marker"></div>
+            </div>
+            
+            <div class="bot-controls">
+                <span class="bot-status-text" id="bot-status-text">Bot Durduruldu</span>
+                <label class="switch">
+                    <input type="checkbox" id="bot-toggle" onchange="toggleBot()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="bot-log-container" id="bot-log">
+                <div class="log-entry log-info">[Sistem] 4 Katmanlı Analiz + Hedef Fiyatlar Hazır.</div>
             </div>
         </div>
 
@@ -362,24 +514,24 @@
             </div>
             
             <div class="timeframe-row">
-                <div class="tf-box" style="border-color: rgba(246, 70, 93, 0.3);">
+                <div class="tf-box" id="box-24h" style="border-color: rgba(246, 70, 93, 0.3);">
                     <span class="tf-label">SON 24 SAAT</span>
                     <span class="tf-val text-red" id="detail-24h-val">$0</span>
                     <span class="tf-sub">Global Toplam</span>
                 </div>
-                <div class="tf-box" style="border-color: var(--accent);">
+                <div class="tf-box" id="box-4h" style="border-color: var(--accent);">
                     <span class="tf-label" style="color:var(--accent)">SON 4 SAAT</span>
                     <span class="tf-val" style="color:var(--accent)" id="detail-4h-val">$0</span>
                     <span class="tf-sub">Orta Vade</span>
                 </div>
-                <div class="tf-box" style="border-color: var(--fed-blue);">
+                <div class="tf-box" id="box-1h" style="border-color: var(--fed-blue);">
                     <span class="tf-label" style="color:var(--fed-blue)">SON 1 SAAT</span>
                     <span class="tf-val" style="color:var(--fed-blue)" id="detail-1h-val">$0</span>
                     <span class="tf-sub">Anlık Akış</span>
                 </div>
             </div>
             
-            <div style="text-align:center; margin-bottom:10px; font-size:0.8rem; color:var(--text-secondary);">24 SAATLİK DAĞILIM</div>
+            <div style="text-align:center; margin-bottom:10px; font-size:0.8rem; color:var(--text-secondary);">24 SAATLİK DAĞILIM (CANLI)</div>
             <div class="ls-split-container">
                 <div class="ls-box">
                     <span class="ls-title text-green" style="border-bottom: 2px solid var(--liq-long); display:inline-block; padding-bottom:3px;">LONG</span>
@@ -428,88 +580,50 @@
                     <tr class="cal-row">
                         <td class="cal-time">25 Kas 18:00</td>
                         <td class="cal-impact cal-impact-high">⭐⭐⭐</td>
-                        <td>
-                            CB Tüketici Güveni (Kas)
-                            <span class="cal-analysis">Veri < 100 gelirse -> DXY Düşer, BTC Pozitif</span>
-                        </td>
+                        <td>CB Tüketici Güveni (Kas)<span class="cal-analysis">Veri < 100 gelirse -> DXY Düşer, BTC Pozitif</span></td>
                         <td class="cal-forecast">102.0</td>
                     </tr>
                     <tr class="cal-row">
                         <td class="cal-time">25 Kas 18:00</td>
                         <td class="cal-impact cal-impact-medium">⭐⭐</td>
-                        <td>
-                            Yeni Konut Satışları (Eki)
-                            <span class="cal-analysis">Yüksek gelirse ekonomi canlı demektir, faiz indirimi zorlaşır.</span>
-                        </td>
+                        <td>Yeni Konut Satışları (Eki)<span class="cal-analysis">Yüksek gelirse ekonomi canlı demektir.</span></td>
                         <td class="cal-forecast">725K</td>
                     </tr>
-
                     <!-- 26 Kasım -->
                     <tr class="cal-row">
                         <td class="cal-time">26 Kas 16:30</td>
                         <td class="cal-impact cal-impact-high">⭐⭐⭐</td>
-                        <td>
-                            GSYİH (GDP) (3. Çeyrek)
-                            <span class="cal-analysis">Beklenti Altı -> Resesyon korkusu -> BTC Düşebilir</span>
-                        </td>
+                        <td>GSYİH (GDP) (3. Çeyrek)<span class="cal-analysis">Beklenti Altı -> Resesyon korkusu -> BTC Düşebilir</span></td>
                         <td class="cal-forecast">%2.9</td>
                     </tr>
                     <tr class="cal-row">
                         <td class="cal-time">26 Kas 16:30</td>
                         <td class="cal-impact cal-impact-high">⭐⭐⭐</td>
-                        <td>
-                            İşsizlik Başvuruları
-                            <span class="cal-analysis">Yüksek Gelirse -> Faiz İndirimi İhtimali Artar -> BTC Yükselir</span>
-                        </td>
+                        <td>İşsizlik Başvuruları<span class="cal-analysis">Yüksek Gelirse -> Faiz İndirimi İhtimali Artar -> BTC Yükselir</span></td>
                         <td class="cal-forecast">220K</td>
                     </tr>
                     <tr class="cal-row">
                         <td class="cal-time">26 Kas 16:30</td>
                         <td class="cal-impact cal-impact-medium">⭐⭐</td>
-                        <td>
-                            Dayanıklı Mal Siparişleri (Eki)
-                            <span class="cal-analysis">Sanayi üretimi sinyali. Düşük gelirse dolar zayıflar.</span>
-                        </td>
+                        <td>Dayanıklı Mal Siparişleri (Eki)<span class="cal-analysis">Sanayi üretimi sinyali.</span></td>
                         <td class="cal-forecast">%0.5</td>
                     </tr>
-                    
-                    <!-- 26 Kasım Akşamı -->
                     <tr class="cal-row">
                         <td class="cal-time">26 Kas 18:00</td>
                         <td class="cal-impact cal-impact-high" style="color:#ef4444;">⭐⭐⭐</td>
-                        <td>
-                            Çekirdek PCE Fiyat Endeksi (Yıllık)
-                            <span class="cal-analysis">Fed'in favori enflasyon verisi. Düşük gelirse -> RALLİ!</span>
-                        </td>
+                        <td>Çekirdek PCE Fiyat Endeksi<span class="cal-analysis">Fed'in favori enflasyon verisi. Düşük gelirse -> RALLİ!</span></td>
                         <td class="cal-forecast">%2.8</td>
                     </tr>
                     <tr class="cal-row">
                         <td class="cal-time">26 Kas 18:00</td>
                         <td class="cal-impact cal-impact-medium">⭐⭐</td>
-                        <td>
-                            Kişisel Gelir / Giderler (Eki)
-                            <span class="cal-analysis">Tüketici harcaması artarsa enflasyon yapışkan kalabilir.</span>
-                        </td>
-                        <td class="cal-forecast">%0.3</td>
-                    </tr>
-                    <tr class="cal-row">
-                        <td class="cal-time">26 Kas 18:00</td>
-                        <td class="cal-impact cal-impact-medium">⭐⭐</td>
-                        <td>
-                            Chicago PMI (Kas)
-                            <span class="cal-analysis">50 altı daralma sinyalidir.</span>
-                        </td>
+                        <td>Chicago PMI (Kas)<span class="cal-analysis">50 altı daralma sinyalidir.</span></td>
                         <td class="cal-forecast">48.2</td>
                     </tr>
-
-                    <!-- 27 Kasım -->
                     <tr class="cal-row">
-                        <td class="cal-time" style="color:#666;">27 Kas Tüm Gün</td>
+                        <td class="cal-time" style="color:#666;">27 Kas</td>
                         <td class="cal-impact">⭐⭐</td>
-                        <td>
-                            Şükran Günü (Tatil)
-                            <span class="cal-analysis">Piyasalar kapalı/erken kapanış. Düşük hacim, ani hareket riski.</span>
-                        </td>
+                        <td>Şükran Günü (Tatil)<span class="cal-analysis">Düşük hacim, ani hareket riski.</span></td>
                         <td class="cal-forecast">-</td>
                     </tr>
                 </tbody>
@@ -519,8 +633,11 @@
     </div>
 
     <script>
-        // --- 1. YARDIMCI FONKSİYONLAR ---
-        function formatMoney(num) {
+        // --- 1. YARDIMCI FONKSİYONLAR (EN BAŞTA) ---
+        function formatMoney(num, isFull = false) {
+            if (isFull) {
+                return '$' + Math.floor(num).toLocaleString('en-US');
+            }
             if (num >= 1000000000) return '$' + (num / 1000000000).toFixed(2) + 'B';
             if (num >= 1000000) return '$' + (num / 1000000).toFixed(2) + 'M';
             if (num >= 1000) return '$' + (num / 1000).toFixed(2) + 'K';
@@ -535,17 +652,21 @@
         let fourHourTotal = (longLiqTotal + shortLiqTotal) / 5; 
         let fedCutProb = 67.8;
 
-        // --- 3. UI UPDATE FONKSİYONLARI ---
+        // Bot Değişkenleri
+        let botActive = false;
+        let botScore = 0; 
+
+        // --- 3. UI UPDATE ---
         function updateGlobalTotals() {
             const total24h = longLiqTotal + shortLiqTotal;
             const elGlobal = document.getElementById('global-liq-total-small');
             if(elGlobal) elGlobal.innerText = formatMoney(total24h);
             
             const el24h = document.getElementById('detail-24h-val');
-            if(el24h) el24h.innerText = formatMoney(total24h);
+            if(el24h) el24h.innerText = formatMoney(total24h, true);
             
-            document.getElementById('detail-4h-val').innerText = formatMoney(fourHourTotal);
-            document.getElementById('detail-1h-val').innerText = formatMoney(hourlyTotal);
+            document.getElementById('detail-4h-val').innerText = formatMoney(fourHourTotal, true);
+            document.getElementById('detail-1h-val').innerText = formatMoney(hourlyTotal, true);
             document.getElementById('long-liq-detail').innerText = formatMoney(longLiqTotal);
             document.getElementById('short-liq-detail').innerText = formatMoney(shortLiqTotal);
 
@@ -568,6 +689,14 @@
             document.getElementById('fed-hold-val').innerText = '%' + displayHold.toFixed(1);
         }
 
+        function triggerFlash(elementId, type) {
+            const el = document.getElementById(elementId);
+            if(!el) return;
+            el.classList.remove('flash-up', 'flash-down');
+            void el.offsetWidth; 
+            el.classList.add(type === 'up' ? 'flash-up' : 'flash-down');
+        }
+
         function updateRSI_UI(rsi) {
             const rsiVal = document.getElementById('rsi-val');
             const rsiLabel = document.getElementById('rsi-label');
@@ -577,30 +706,20 @@
             let comment = "", borderColor = "";
 
             if (rsi >= 70) {
-                rsiLabel.innerText = "AŞIRI ALIM (DİKKAT)";
-                rsiLabel.style.color = "var(--down-color)"; rsiVal.style.color = "var(--down-color)";
-                comment = "Fiyat teknik olarak 'pahalı' bölgeye girdi. Alıcılar yorgun düşebilir. Geçmiş veriler, bu seviyelerden sonra genellikle bir <b>düzeltme (geri çekilme)</b> yaşandığını gösterir. Yeni alım için riskli.";
-                borderColor = "var(--down-color)";
+                rsiLabel.innerText = "AŞIRI ALIM"; rsiLabel.style.color = "var(--down-color)"; rsiVal.style.color = "var(--down-color)";
+                comment = "Fiyat 'pahalı' bölgede. Düzeltme riski yüksek."; borderColor = "var(--down-color)";
             } else if (rsi >= 60) {
-                rsiLabel.innerText = "GÜÇLÜ TREND";
-                rsiLabel.style.color = "var(--up-color)"; rsiVal.style.color = "var(--up-color)";
-                comment = "Boğalar piyasaya hakim. Trend yukarı yönlü güçlü devam ediyor ancak 70 seviyesine yaklaştıkça kar satışları gelebilir. Stoplu bir şekilde trend takip edilebilir.";
-                borderColor = "var(--up-color)";
+                rsiLabel.innerText = "GÜÇLÜ TREND"; rsiLabel.style.color = "var(--up-color)"; rsiVal.style.color = "var(--up-color)";
+                comment = "Trend güçlü. Boğalar kontrolü elinde tutuyor."; borderColor = "var(--up-color)";
             } else if (rsi >= 40) {
-                rsiLabel.innerText = "NÖTR / DENGELİ";
-                rsiLabel.style.color = "var(--rsi-neutral)"; rsiVal.style.color = "#fff";
-                comment = "Piyasa kararsız veya yatay seyirde. Ne alıcılar ne de satıcılar tam baskın değil. Kırılım yönü beklenmeli. Büyük bir hareket öncesi 'fırtına öncesi sessizlik' olabilir.";
-                borderColor = "var(--rsi-neutral)";
+                rsiLabel.innerText = "NÖTR"; rsiLabel.style.color = "var(--rsi-neutral)"; rsiVal.style.color = "#fff";
+                comment = "Piyasa kararsız. Kırılım beklenmeli."; borderColor = "var(--rsi-neutral)";
             } else if (rsi >= 30) {
-                rsiLabel.innerText = "SATIŞ BASKISI";
-                rsiLabel.style.color = "#f97316"; rsiVal.style.color = "#f97316";
-                comment = "Ayılar (satıcılar) kontrolde. Fiyat düşüş eğiliminde. Henüz dip sinyali gelmedi, acele etmeden destek seviyeleri izlenmeli.";
-                borderColor = "#f97316";
+                rsiLabel.innerText = "SATIŞ BASKISI"; rsiLabel.style.color = "#f97316"; rsiVal.style.color = "#f97316";
+                comment = "Ayılar baskın. Henüz dip sinyali yok."; borderColor = "#f97316";
             } else {
-                rsiLabel.innerText = "AŞIRI SATIM (FIRSAT)";
-                rsiLabel.style.color = "var(--up-color)"; rsiVal.style.color = "var(--up-color)";
-                comment = "Fiyat teknik olarak 'ucuz' bölgeye indi. Satıcılar tükendi. Burası genelde <b>tepki yükselişi (bounce)</b> için potansiyel bir dip bölgesidir. Kademeli alım düşünülebilir.";
-                borderColor = "var(--up-color)";
+                rsiLabel.innerText = "AŞIRI SATIM"; rsiLabel.style.color = "var(--up-color)"; rsiVal.style.color = "var(--up-color)";
+                comment = "Fiyat 'ucuz' bölgede. Tepki yükselişi gelebilir."; borderColor = "var(--up-color)";
             }
             rsiComment.innerHTML = comment; rsiComment.style.borderLeftColor = borderColor;
         }
@@ -611,12 +730,9 @@
             const valHist = document.getElementById(`val-hist-${suffix}`);
             const container = document.getElementById(`hist-bars-${suffix}`);
             
-            // Elementlerin varlığını kontrol et
             if (!statusEl || !valMacd || !valHist || !container) return;
 
-            valMacd.innerText = macd.toFixed(2); 
-            valHist.innerText = hist.toFixed(2);
-            
+            valMacd.innerText = macd.toFixed(2); valHist.innerText = hist.toFixed(2);
             if (hist > 0) {
                 if (macd < 0) { statusEl.innerText = "AL (DİP)"; statusEl.className = "macd-signal-big text-green"; }
                 else { statusEl.innerText = "GÜÇLÜ AL"; statusEl.className = "macd-signal-big text-green"; }
@@ -634,6 +750,166 @@
             }
         }
 
+        // --- BOT MANTIĞI (MULTI-INDICATOR + TARGETS) ---
+        function toggleBot() {
+            botActive = document.getElementById('bot-toggle').checked;
+            const statusEl = document.getElementById('bot-status-text');
+            if (botActive) {
+                statusEl.innerText = "Bot Çalışıyor (Analiz Ediliyor)";
+                statusEl.className = "bot-status-text bot-active";
+                addBotLog("Sistem başlatıldı. Veriler toplanıyor...");
+                runAdvancedBotStrategy(); 
+            } else {
+                statusEl.innerText = "Bot Durduruldu";
+                statusEl.className = "bot-status-text";
+                addBotLog("Sistem durduruldu.");
+            }
+        }
+
+        function addBotLog(msg, type = "log-info") {
+            const log = document.getElementById('bot-log');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.innerText = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            log.prepend(entry);
+        }
+        
+        // Gelişmiş Strateji Motoru
+        async function runAdvancedBotStrategy() {
+            if(!botActive) return;
+            
+            try {
+                const res = await fetch('https://api.bybit.com/v5/market/kline?category=inverse&symbol=BTCUSD&interval=60&limit=200');
+                const json = await res.json();
+                if (json.retCode !== 0) return;
+                const closes = json.result.list.map(d => parseFloat(d[4])).reverse(); 
+                
+                // Hesaplamalar
+                const rsi = calculateRSI_Raw(closes, 14);
+                const { macdLine, signalLine } = calculateMACD_Raw(closes);
+                const { upper, lower, sma } = calculateBB_Raw(closes, 20, 2);
+                const ema50 = calculateEMA_Raw(closes, 50);
+                const ema200 = calculateEMA_Raw(closes, 200);
+                
+                const lastClose = closes[closes.length - 1];
+                const lastMACD = macdLine[macdLine.length - 1];
+                const lastSignal = signalLine[signalLine.length - 1];
+                
+                // TARGETLERİ GÜNCELLE
+                const safeBuy = lower;
+                const targetSell = sma;
+                const stopLoss = lower * 0.985; // %1.5 Altı
+
+                document.getElementById('target-buy').innerText = '$' + Math.floor(safeBuy).toLocaleString();
+                document.getElementById('target-sell').innerText = '$' + Math.floor(targetSell).toLocaleString();
+                document.getElementById('target-stop').innerText = '$' + Math.floor(stopLoss).toLocaleString();
+
+                // PUANLAMA SİSTEMİ (-10 ile +10 arası)
+                let score = 0;
+                
+                // 1. RSI Analizi
+                let rsiStatus = "NÖTR";
+                if (rsi < 30) { score += 2; rsiStatus = "AŞIRI SATIM"; }
+                else if (rsi > 70) { score -= 2; rsiStatus = "AŞIRI ALIM"; }
+                else if (rsi > 50) { score += 0.5; } 
+                
+                // 2. MACD Analizi
+                let macdStatus = "NÖTR";
+                if (lastMACD > lastSignal) { score += 2; macdStatus = "AL"; }
+                else { score -= 2; macdStatus = "SAT"; }
+                
+                // 3. Bollinger Analizi
+                let bbStatus = "NÖTR";
+                if (lastClose < lower) { score += 3; bbStatus = "DİP (AL)"; } 
+                else if (lastClose > upper) { score -= 3; bbStatus = "TEPE (SAT)"; }
+                
+                // 4. Trend Analizi (EMA)
+                let trendStatus = "NÖTR";
+                const lastEMA50 = ema50[ema50.length - 1];
+                const lastEMA200 = ema200[ema200.length - 1];
+                if (lastClose > lastEMA200) { score += 1; trendStatus = "YÜKSELİŞ"; }
+                else { score -= 1; trendStatus = "DÜŞÜŞ"; }
+                if (lastEMA50 > lastEMA200) score += 1; 
+                
+                updateBotStatusUI(rsiStatus, macdStatus, bbStatus, trendStatus, score);
+                
+                if (score >= 4) {
+                     addBotLog(`GÜÇLÜ AL SİNYALİ! Puan: ${score}`, "log-buy");
+                } else if (score <= -4) {
+                     addBotLog(`GÜÇLÜ SAT SİNYALİ! Puan: ${score}`, "log-sell");
+                }
+                
+            } catch(e) { console.log(e); }
+        }
+        
+        function updateBotStatusUI(rsi, macd, bb, trend, score) {
+            setIndBox('ind-box-rsi', 'ind-val-rsi', rsi);
+            setIndBox('ind-box-macd', 'ind-val-macd', macd);
+            setIndBox('ind-box-bb', 'ind-val-bb', bb);
+            setIndBox('ind-box-ema', 'ind-val-ema', trend);
+            
+            const percent = ((score + 10) / 20) * 100;
+            document.getElementById('decision-marker').style.left = `${percent}%`;
+        }
+        
+        function setIndBox(boxId, valId, status) {
+            const box = document.getElementById(boxId);
+            const val = document.getElementById(valId);
+            val.innerText = status;
+            
+            if (status.includes("AL") || status === "YÜKSELİŞ" || status === "AŞIRI SATIM") {
+                box.style.borderColor = "var(--up-color)";
+                val.style.color = "var(--up-color)";
+            } else if (status.includes("SAT") || status === "DÜŞÜŞ" || status === "AŞIRI ALIM") {
+                box.style.borderColor = "var(--down-color)";
+                val.style.color = "var(--down-color)";
+            } else {
+                box.style.borderColor = "#2b3139";
+                val.style.color = "#fff";
+            }
+        }
+        
+        function calculateRSI_Raw(closes, period) {
+            let gains=0, losses=0;
+            for(let i=1; i<=period; i++) {
+                let chg = closes[i]-closes[i-1];
+                if(chg>0) gains+=chg; else losses+=Math.abs(chg);
+            }
+            let avgGain=gains/period, avgLoss=losses/period;
+            for(let i=period+1; i<closes.length; i++) {
+                let chg = closes[i]-closes[i-1];
+                let g = chg>0?chg:0; let l = chg<0?Math.abs(chg):0;
+                avgGain=((avgGain*13)+g)/14; avgLoss=((avgLoss*13)+l)/14;
+            }
+            return 100-(100/(1+(avgGain/avgLoss)));
+        }
+        function calculateEMA_Raw(prices, period) {
+            const k = 2/(period+1);
+            let emaArr = [prices[0]];
+            for(let i=1; i<prices.length; i++) {
+                emaArr.push(prices[i]*k + emaArr[i-1]*(1-k));
+            }
+            return emaArr;
+        }
+        function calculateMACD_Raw(closes) {
+            const ema12 = calculateEMA_Raw(closes, 12);
+            const ema26 = calculateEMA_Raw(closes, 26);
+            let macdLine = [];
+            for(let i=0; i<closes.length; i++) macdLine.push(ema12[i]-ema26[i]);
+            const signalLine = calculateEMA_Raw(macdLine, 9);
+            return { macdLine, signalLine };
+        }
+        function calculateBB_Raw(closes, period, stdMult) {
+            const slice = closes.slice(-period);
+            let sum=0; slice.forEach(v => sum+=v);
+            const sma = sum/period;
+            let sumSq=0; slice.forEach(v => sumSq+=Math.pow(v-sma,2));
+            const std = Math.sqrt(sumSq/period);
+            return { upper: sma+(std*stdMult), lower: sma-(std*stdMult), sma };
+        }
+
+
+        // --- TELEGRAM DOM ---
         function addTelegramMessageDOM(symbol, side, price, totalVal, timeStr, container, isNew = true) {
             if(totalVal < 500) return; 
             const isLong = side === 'SELL'; 
@@ -664,7 +940,31 @@
 
         // --- 4. API & DATA FETCHING ---
         
-        // RSI: Bybit'ten Çek
+        async function updateInitialLiquidationsBasedOnVolatility() {
+            try {
+                const res = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT');
+                const data = await res.json();
+                const changePercent = Math.abs(parseFloat(data.priceChangePercent));
+                const baseLiquidation = 100000000;
+                const volatilityImpact = changePercent * 50000000; 
+                const isDrop = parseFloat(data.priceChangePercent) < 0;
+                
+                let estimatedTotal = baseLiquidation + volatilityImpact;
+                
+                if(isDrop) {
+                    longLiqTotal = estimatedTotal * 0.8; 
+                    shortLiqTotal = estimatedTotal * 0.2;
+                } else {
+                    longLiqTotal = estimatedTotal * 0.2;
+                    shortLiqTotal = estimatedTotal * 0.8;
+                }
+                
+                hourlyTotal = estimatedTotal / 12;
+                fourHourTotal = estimatedTotal / 4;
+                updateGlobalTotals();
+            } catch(e) {}
+        }
+
         async function calculateDailyRSI() {
             try {
                 const res = await fetch('https://api.bybit.com/v5/market/kline?category=inverse&symbol=BTCUSD&interval=D&limit=30');
@@ -672,7 +972,6 @@
                 if (json.retCode !== 0) throw new Error("Bybit API");
                 const list = json.result.list.reverse();
                 const closes = list.map(d => parseFloat(d[4])); 
-                
                 const period = 14; let gains = 0, losses = 0;
                 for (let i = 1; i <= period; i++) {
                     const change = closes[i] - closes[i - 1];
@@ -686,18 +985,10 @@
                 }
                 const rs = avgGain / avgLoss; let rsi = 100 - (100 / (1 + rs));
                 updateRSI_UI(rsi);
-            } catch(e) {
-                console.log("RSI Error (Bybit)");
-                updateRSI_UI(50);
-            }
+            } catch(e) { updateRSI_UI(50); }
         }
 
-        // MACD: Bybit'ten Çek
-        // Bybit Interval Kodları: 4H -> '240', 1D -> 'D'
-        async function updateAllMACD() { 
-            await calculateMACD('240', '4h'); 
-            await calculateMACD('D', '1d'); 
-        }
+        async function updateAllMACD() { await calculateMACD('240', '4h'); await calculateMACD('D', '1d'); }
         
         async function calculateMACD(interval, suffix) {
             try {
@@ -719,9 +1010,7 @@
                 const lastMACD = macdLine[macdLine.length - 1]; const lastSignal = signalLine[signalLine.length - 1];
                 const histogram = lastMACD - lastSignal;
                 updateMACDUI(lastMACD, lastSignal, histogram, suffix);
-            } catch (e) {
-                console.log(`MACD Error (${interval}):`, e);
-            }
+            } catch (e) {}
         }
 
         async function fetchRecentHistory() {
@@ -731,10 +1020,7 @@
                 const symbols = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'XRPUSDT', 'BNBUSDT'];
                 let allOrders = [];
                 const proxyUrl = 'https://api.allorigins.win/raw?url=';
-
                 for(const sym of symbols) {
-                    // ForceOrders public olmadığı için Spot Trade verisi ile simüle ediyoruz (Başlangıç doluluğu için)
-                    // Gerçek likidasyonlar WebSocket ile akacak
                     const targetUrl = `https://api.binance.com/api/v3/trades?symbol=${sym}&limit=5`;
                     const res = await fetch(proxyUrl + encodeURIComponent(targetUrl));
                     const data = await res.json();
@@ -742,13 +1028,12 @@
                         data.forEach(t => {
                             t.symbol = sym;
                             t.origQty = t.qty;
-                            t.side = t.isBuyerMaker ? 'SELL' : 'BUY';
+                            t.side = t.isBuyerMaker ? 'SELL' : 'BUY'; 
                         });
                         allOrders = allOrders.concat(data);
                     }
                 }
                 allOrders.sort((a, b) => b.time - a.time);
-                
                 if(allOrders.length > 0) {
                     container.innerHTML = ''; 
                     allOrders.forEach(order => {
@@ -764,7 +1049,7 @@
                     container.innerHTML = '<div class="tg-msg" style="text-align:center;">Geçmiş veri bulunamadı. Canlı bekleniyor...</div>';
                 }
             } catch (e) { 
-                container.innerHTML = '<div class="tg-msg" style="text-align:center;">Geçmiş veriye erişilemedi (Proxy/API). Canlı bekleniyor.</div>'; 
+                container.innerHTML = '<div class="tg-msg" style="text-align:center;">Canlı akış bekleniyor...</div>'; 
             }
         }
 
@@ -778,6 +1063,10 @@
             const cEl = document.getElementById('btc-change');
             pEl.innerText = '$' + price.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
             pEl.style.color = price > currentPrice ? 'var(--up-color)' : (price < currentPrice ? 'var(--down-color)' : '#fff');
+            
+            // Bot Fiyat Güncelleme
+            document.getElementById('bot-live-price').innerText = '$' + price.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+            
             currentPrice = price;
             const sign = change >= 0 ? '+' : '';
             const colorClass = change >= 0 ? 'text-green' : 'text-red';
@@ -796,10 +1085,13 @@
             const globalEstimatedAmount = rawAmount * marketMultiplier;
 
             if (order.S === 'SELL') longLiqTotal += globalEstimatedAmount; else shortLiqTotal += globalEstimatedAmount;
-            hourlyTotal += globalEstimatedAmount; fourHourTotal += globalEstimatedAmount;
+            
+            hourlyTotal += globalEstimatedAmount;
+            fourHourTotal += globalEstimatedAmount;
             
             updateGlobalTotals();
-            addTelegramMessage(order.s, order.S, price, rawAmount); 
+            triggerFlash('box-1h', 'up'); 
+            addTelegramMessageDOM(order.s, order.S, price, rawAmount, new Date().toLocaleTimeString(), document.getElementById('tg-feed'), true);
         };
 
         // --- 6. INIT ---
@@ -816,22 +1108,20 @@
         }).catch(e => {});
 
         // Başlat
+        updateInitialLiquidationsBasedOnVolatility(); 
         fetchRecentHistory();
-        updateGlobalTotals();
         updateAllMACD();
         calculateDailyRSI(); 
         
+        // Hızlı güncelleme döngüsü
         setInterval(() => {
-            const randomBase = Math.random() * 4000;
-            longLiqTotal += randomBase;
-            hourlyTotal += randomBase; 
-            fourHourTotal += randomBase;
-            updateGlobalTotals();
+            updateGlobalTotals(); 
             updateFedProb(); 
-        }, 2000);
+        }, 500); 
 
         setInterval(updateAllMACD, 60000); 
         setInterval(calculateDailyRSI, 60000); 
+        setInterval(runAdvancedBotStrategy, 10000); // Bot her 10 saniyede bir analiz yapar
 
     </script>
 </body>
